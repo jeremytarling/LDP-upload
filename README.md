@@ -10,4 +10,7 @@ run from the command line:
 
 ruby LDP-upload.rb [--int|--test|--stage|--live] [--no-proxy]
 
+TODO:
 
+* get the TTL as a command line ARGV (currently hard coded)
+* slurp the response 'next URL' value to set up the next run for each env
