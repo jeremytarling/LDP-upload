@@ -4,6 +4,7 @@ require 'json'
 # grab the command line arguements
 @ttl = ARGV[0]
 @env = ARGV[1].to_s
+@proxy = ARGV[2].to_s
 
 # choose an environment form command line args
 if @env == '--int'
@@ -21,10 +22,10 @@ end
 
 #assume we;re inside reith
 unless ARGV[2] == '--no-proxy'
-		RestClient.proxy = "http://www-cache.reith.bbc.co.uk/"
+  RestClient.proxy = "http://www-cache.reith.bbc.co.uk/"
 end
 SSL = {
-	:ssl_client_cert => OpenSSL::X509::Certificate.new(File.read("/Users/tarlij01/Documents/certs/Forge.pem")),
+  :ssl_client_cert => OpenSSL::X509::Certificate.new(File.read("/Users/tarlij01/Documents/certs/Forge.pem")),
   :ssl_client_key => OpenSSL::PKey::RSA.new(File.read("/Users/tarlij01/Documents/certs/Forge.pem")),
 }
 
