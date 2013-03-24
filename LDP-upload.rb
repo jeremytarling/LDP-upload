@@ -18,8 +18,7 @@ def getProxy
   end
 end
 
-
-# make the request, catch the error if it's not a 200
+# make the PUT request, let RestClient catch the error if it's not a 200
 def putData
   begin
     resource = RestClient::Resource.new(@url, SSL)
@@ -29,6 +28,7 @@ def putData
   end
 end
 
+# update the vale of @url from the response to the PUT
 def getNextUrl
   @nextUrl = @response.body.lines.grep(/nextUrl/)
   @url = @nextUrl[0].to_s.sub("nextUrl=","")
@@ -43,10 +43,26 @@ def feedBack
   puts "value of @url now set to #{@url}"
 end
 
-# call some methods
-getProxy
-putData
-feedBack
+def nextStep
+  puts "proceed to next step? (y|n)"
+  @answer = STDIN.gets.chomp
+  if @answer == 'y'
+    putData
+    feedBack
+    nextStep
+  elsif @answer == 'n'
+    puts "bye!"
+  end
+end
 
-puts "proceed to next step?"
-gets @nextstep
+# call some methods
+def ldpUpload
+  getProxy
+  putData
+  feedBack
+  nextStep
+end
+
+ldpUpload
+
+
