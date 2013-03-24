@@ -8,9 +8,8 @@ needs the rest-client gem and a valid BBC SSL cerificate that's been added to th
 
 run from the command line:
 
-ruby LDP-upload.rb [--int|--test|--stage|--live] [--no-proxy]
+ruby LDP-upload.rb (file.ttl) (--int|--test|--stage|--live) [--no-proxy]
 
 TODO:
 
-* get the TTL as a command line ARGV (currently hard coded)
 * slurp the response 'next URL' value to set up the next run for each env

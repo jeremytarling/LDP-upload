@@ -1,23 +1,26 @@
 require 'restclient'
 require 'json'
 
+# grab the command line arguements
+@ttl = ARGV[0]
+@env = ARGV[1].to_s
+
 # choose an environment form command line args
-env = ARGV[0].to_s
-if env == '--int'
+if @env == '--int'
   HOST = 'https://api.int.bbc.co.uk/'
-elsif env  == '--test'
+elsif @env  == '--test'
   HOST = 'https://api.test.bbc.co.uk/'
-elsif env  ==  '--stage'
+elsif @env  ==  '--stage'
   HOST = 'https://api.stage.bbc.co.uk/'
-elsif env  ==  '--live'
+elsif @env  ==  '--live'
   HOST = 'https://api.live.bbc.co.uk/'
-elsif env == '--localhost'
+elsif @env == '--localhost'
   HOST = 'http://localhost:8080/'
 else puts "usage: must specify environment: --int|--test|--stage|--live|--local"
 end
 
 #assume we;re inside reith
-unless ARGV[1] == '--no-proxy'
+unless ARGV[2] == '--no-proxy'
 		RestClient.proxy = "http://www-cache.reith.bbc.co.uk/"
 end
 SSL = {
@@ -38,7 +41,7 @@ puts "PUTing to #{@url}\n"
 # make the request, catch the error if it's not a 200
 begin
   resource = RestClient::Resource.new(@url, SSL)
-  @response = resource.put(File.read('birmingham-1.ttl'), :content_type => 'application/x-turtle') 
+  @response = resource.put(File.read(@ttl), :content_type => 'application/x-turtle') 
 rescue => e
   @response = e.response
 end
